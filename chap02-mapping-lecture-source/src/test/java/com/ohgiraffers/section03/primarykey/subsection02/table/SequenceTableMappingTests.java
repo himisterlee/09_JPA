@@ -1,4 +1,4 @@
-package com.ohgiraffers.section03.primarykey.subsection01.identify;
+package com.ohgiraffers.section03.primarykey.subsection02.table;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,8 +9,7 @@ import org.junit.jupiter.api.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class PrimaryKeyMappingTests {
-
+public class SequenceTableMappingTests {
     private static EntityManagerFactory entityManagerFactory;
     private static EntityManager entityManager;
 
@@ -34,27 +33,9 @@ public class PrimaryKeyMappingTests {
         entityManager.close();
     }
 
-    /*
-       Primary key에는 @Id 어노테이션과 @GeneratedValue 어노테이션을 사용한다.
-       @Id 어노테이션은 엔티티 클래스에서 primary key 역할을 하는 필드를 지정할 때 사용된다.
-       @GeneratedValue 어노테이션을 함께 사용하면 primary key 값을 자동으로 생성할 수 있다.
-
-       데이터베이스마다 기본 키를 생성하는 방식이 서로 다르다.
-       @GeneratedValue 어노테이션은 다음과 같은 속성을 가지고 있다.
-
-    - strategy : 자동 생성 전략을 지정
-        - GenerationType.IDENTITY : 기본 키 생성을 데이터베이스에 위임(MySQL의 AUTO_INCREMENT)
-        - GenerationType.SEQUENCE : 데이터베이스 시퀀스 객체 사용(ORACLE의 SEQUENCE)
-        - GenerationType.TABLE : 키 생성 테이블 사용
-        - GenerationType.AUTO : 자동 선택 (MySQL이라면 IDENTITY, ORACLE이라면 SEQUENCE로 선택)
-    - generator : strategy 값을 GenerationType.TABLE로 지정한 경우 사용되는 테이블 이름을 지정
-    - initialValue : strategy 값을 GenerationType.SEQUENCE로 지정한 경우 시퀀스 초기값을 지정
-    - allocationSize : strategy 값을 GenerationType.SEQUENCE로 지정한 경우 시퀀스 증가치를 지정
-    * */
-
     @DisplayName("식별자 매핑 테스트")
     @Test
-    public void identityMappingTest() {
+    public void identifierSequenceMappingTable() {
 
         //given
         Member member1 = new Member();
@@ -87,19 +68,16 @@ public class PrimaryKeyMappingTests {
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
 
         //then
-
-        String jpql = "select a.memberNo from member_section03_sub01 a"; // entity 명 사용, 별칭 필수
-
+        String jpql = "select a.memberNo from member_section03_sub02 a";
         List<Integer> members = entityManager.createQuery(jpql, Integer.class).getResultList();
 
-//        members.forEach(System.out::println);
         for (Integer member : members) {
             System.out.println(member);
         }
-    }
 
+    }
 }
