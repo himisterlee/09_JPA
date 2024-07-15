@@ -65,7 +65,8 @@ public class A_EntityManagerCRUDTests {
 
         // when
         EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();; // 트렌잭션 시작을 선언
+        transaction.begin();
+        ; // 트렌잭션 시작을 선언
         try {
             entityManager.persist(menu); // 영속성 컨텍스트에 등록
             transaction.commit();
@@ -97,8 +98,8 @@ public class A_EntityManagerCRUDTests {
 
         try {
             menu.setMenuName(menuNameChange);
-            transaction .commit();
-        }catch (Exception e) {
+            transaction.commit();
+        } catch (Exception e) {
             transaction.rollback();
             e.printStackTrace();
         }
@@ -110,4 +111,30 @@ public class A_EntityManagerCRUDTests {
                 entityManager.find(Menu.class, 23).getMenuName());
     }
 
-}
+
+        @DisplayName("메뉴 삭제하기 테스트")
+        @Test
+        public void deleteMenu () {
+
+            //given
+            Menu menuToRemove = entityManager.find(Menu.class, 23); // 영속화
+            System.out.println("menuToRemove = " + menuToRemove);
+
+            //when
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            try {
+                entityManager.remove(menuToRemove);
+                transaction.commit();
+            } catch (Exception e) {
+                transaction.rollback();
+                e.printStackTrace();
+            }
+
+            //then
+            Menu removedMenu = entityManager.find(Menu.class, 23);
+            Assertions.assertEquals(null, removedMenu);
+        }
+
+    }
