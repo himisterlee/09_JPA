@@ -18,7 +18,7 @@ import java.time.LocalDate;
  */
 
 
-@Entity(name="member_section01")
+//@Entity(name="member_section01")
 @Table(name="tbl_member_section01")
 @NoArgsConstructor
 @AllArgsConstructor
