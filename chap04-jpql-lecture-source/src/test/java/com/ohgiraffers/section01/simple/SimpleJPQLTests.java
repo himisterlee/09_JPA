@@ -67,6 +67,8 @@ public class SimpleJPQLTests {
         //when
         String jpql = "select m.menuName from menu_section01 m where m.menuCode = 7";
 
+        // entity 하나를 다룰때는 별칭을 쓰지 않아도 괜찮음
+
         TypedQuery<String> query = entityManager.createQuery(jpql, String.class); // 반환결과를 문자열로 받겠다.
 
         String resultMenuName = query.getSingleResult(); // 결과 반환
