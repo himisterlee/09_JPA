@@ -17,5 +17,11 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     List<Menu> findByMenuPriceGreaterThanOrderByMenuPriceDesc(Integer menuPrice);
 
     // 금액이 같은 메뉴들
+    List<Menu> findByMenuPriceEquals(Integer menuPrice);
 
+    // 금액이 크거나 같은 메뉴들
+    List<Menu> findByMenuPriceGreaterThanEqual(Integer menuPrice);
+
+
+    // menuPrice랑 같은 금액의 메뉴목록 조회
 }

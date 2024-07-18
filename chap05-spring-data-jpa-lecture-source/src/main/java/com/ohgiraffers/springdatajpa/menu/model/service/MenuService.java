@@ -96,6 +96,6 @@ public class MenuService {
 
     public List<CategoryDto> findAllCategory() {
 
-        List<Category> categoryList = categoryRepository.
+        List<Category> categoryList = categoryRepository.findAllCategory();
     }
 }
