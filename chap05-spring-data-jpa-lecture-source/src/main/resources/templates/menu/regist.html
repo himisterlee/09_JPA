@@ -22,17 +22,23 @@
     <input type="submit" value="전송">
 </form>
 <script>
+    // '/menu/category' URL 로 GET 요청 보냄
     fetch('/menu/category')
+        // 응답값을 json 형식으로 파싱
         .then(res => res.json())
-    .then(data => {
-        const $categoryCode = document.getElementById('categoryCode');
+        // 파싱된 데이터를 처리하는 로직
+        .then(data => {
+            // 'categoryCode' Id를 가진 html 요소를 가져온다.
+            const $categoryCode = document.getElementById('categoryCode');
 
-        for(let index in data) {
-            const $option = document.createElement('option');
-            $option.value = data[index].categoryCode;
-            $option.textContent = data[index].categoryName;
+            // 데이터의 각 항목에 대해 반복
+            for(let index in data) {
+                // <option> 요소 생성 및 옵션에 값 설정
+                const $option = document.createElement('option');
+                $option.value = data[index].categoryCode;
+                $option.textContent = data[index].categoryName;
 
-            $categoryCode.appendChild($option);
+                $categoryCode.appendChild($option);
         }
     })
 </script>
